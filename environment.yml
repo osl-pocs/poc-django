@@ -4,8 +4,12 @@ channels:
 dependencies:
   - django
   - djangorestframework
+  - factory_boy
   # development
   - black
   - flake8
   - mypy
+  - pip
   - pre-commit
+  - pip:
+    -  django-extensions
