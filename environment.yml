@@ -4,3 +4,8 @@ channels:
 dependencies:
   - django
   - djangorestframework
+  # development
+  - black
+  - flake8
+  - mypy
+  - pre-commit

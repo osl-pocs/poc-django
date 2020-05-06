@@ -4,15 +4,14 @@ from django.db import models
 class Movie(models.Model):
     name = models.CharField(max_length=255)
     casting = models.ManyToManyField(
-        'Actor',
-        through='Cast',
-        verbose_name='casting',
-        blank=True,
+        'Actor', through='Cast', verbose_name='casting', blank=True,
     )
+
 
 class Actor(models.Model):
     name = models.CharField(max_length=255)
     day_of_birth = models.DateTimeField(auto_now_add=False)
+
 
 class Cast(models.Model):
     movie = models.ForeignKey(

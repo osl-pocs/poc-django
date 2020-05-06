@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from django.urls import include, path
 from rest_framework import routers
+
 from cinema.api import views as api_views
 
 from . import views
@@ -14,6 +15,8 @@ router.register(r'actors', api_views.ActorViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path(
+        'api-auth/', include('rest_framework.urls', namespace='rest_framework')
+    ),
     url(r'^$', views.index, name='index'),
 ]

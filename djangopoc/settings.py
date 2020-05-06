@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     # local
-    'cinema'
+    'cinema',
 ]
 
 MIDDLEWARE = [
@@ -88,19 +88,12 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
+_prefix = 'django.contrib.auth.password_validation'
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': f'{_prefix}.UserAttributeSimilarityValidator'},
+    {'NAME': f'{_prefix}.MinimumLengthValidator'},
+    {'NAME': f'{_prefix}.CommonPasswordValidator'},
+    {'NAME': f'{_prefix}.NumericPasswordValidator'},
 ]
 
 
@@ -126,6 +119,8 @@ STATIC_URL = '/static/'
 # rest
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'DEFAULT_PAGINATION_CLASS': (
+        'rest_framework.pagination.PageNumberPagination'
+    ),
+    'PAGE_SIZE': 10,
 }
