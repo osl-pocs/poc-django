@@ -1,0 +1,3 @@
+# Djangopoc
+
+**Developed by @xmnlab**
