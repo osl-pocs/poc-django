@@ -20,7 +20,7 @@ jobs:
       uses: s-weigand/setup-conda@v1.0.3
     - name: Install Dependencies
       run: |
-        conda env create -n djangopoc -f environment.yml
+        conda env create -n djangopoc --file environment.yml
         conda activate djangopoc
         make develop
     - name: Run Tests
