@@ -1,0 +1,33 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+
+    steps:
+    - name: setup-conda
+      uses: s-weigand/setup-conda@v1.0.3
+    - name: Install Dependencies
+      run: |
+        conda env create -n djangopoc -f environment.yml
+        conda activate djangopoc
+        make develop
+    - name: Run Tests
+      run: |
+        conda activate djangopoc
+        python manage.py test
+    - name: pre-commit hook check
+      run: |
+        conda activate djangopoc
+        pre-commit run --all-files
