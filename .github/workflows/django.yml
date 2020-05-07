@@ -18,6 +18,8 @@ jobs:
     steps:
     - name: setup-conda
       uses: s-weigand/setup-conda@v1.0.3
+    - name: Update conda
+      run: conda update -n base -y conda
     - name: Install Dependencies
       run: |
         conda env create -n djangopoc --file environment.yml
