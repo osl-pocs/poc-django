@@ -17,7 +17,7 @@ jobs:
       matrix:
         python-version: [3.8]
 
-    variables:
+    env:
       COMPOSE_FILE: ci/docker-compose.yml
       PYTHON_VERSION: ${{ matrix.python-version }}
 
