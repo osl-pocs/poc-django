@@ -7,10 +7,16 @@ class Movie(models.Model):
         'Actor', through='Cast', verbose_name='casting', blank=True,
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Actor(models.Model):
     name = models.CharField(max_length=255)
     day_of_birth = models.DateTimeField(auto_now_add=False)
+
+    def __str__(self):
+        return self.name
 
 
 class Cast(models.Model):

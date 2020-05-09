@@ -25,7 +25,7 @@ class MovieFactory(factory.django.DjangoModelFactory):
 class ActorFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: f'actor-name-{n+1}')
     day_of_birth = factory.LazyFunction(
-        lambda: timezone.now() - datetime.timedelta(years=20)
+        lambda: timezone.now() - datetime.timedelta(weeks=20 * 52)
     )
 
     class Meta:
