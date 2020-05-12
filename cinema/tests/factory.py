@@ -4,7 +4,7 @@ import factory
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from cinema.models import Actor, Cast, Movie
+from cinema.models import Actor, Cast, CinemaAward, CinemaAwardMovie, Movie
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -15,11 +15,26 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = User
 
 
+class CinemaAwardFactory(factory.django.DjangoModelFactory):
+    name = factory.Sequence(lambda n: f'cinema-award-{n+1}')
+
+    class Meta:
+        model = CinemaAward
+
+
 class MovieFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: f'movie-name-{n+1}')
 
     class Meta:
         model = Movie
+
+
+class CinemaAwardMovieFactory(factory.django.DjangoModelFactory):
+    cinema_award = factory.SubFactory(CinemaAwardFactory)
+    movie = factory.SubFactory(MovieFactory)
+
+    class Meta:
+        model = CinemaAwardMovie
 
 
 class ActorFactory(factory.django.DjangoModelFactory):

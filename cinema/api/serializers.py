@@ -1,6 +1,32 @@
 from rest_framework import serializers
 
-from cinema.models import Actor, Cast, Movie
+from cinema.models import Actor, Cast, CinemaAward, CinemaAwardMovie, Movie
+
+
+class CinemaAwardSerializer(serializers.HyperlinkedModelSerializer):
+    """CinemaAward Serializer."""
+
+    movie_rank = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = CinemaAward
+        fields = ['name', 'rank']
+
+    def to_representation(self, instance):
+        return {
+            'id': instance.id,
+            'name': instance.name,
+            'rank': [
+                {
+                    'movie_id': v.movie.id,
+                    'movie_name': v.movie.name,
+                    'rank': v.rank,
+                }
+                for v in CinemaAwardMovie.objects.filter(
+                    cinema_award_id=instance.id
+                )
+            ],
+        }
 
 
 class MovieSerializer(serializers.HyperlinkedModelSerializer):
