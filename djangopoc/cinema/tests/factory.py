@@ -4,7 +4,13 @@ import factory
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from cinema.models import Actor, Cast, CinemaAward, CinemaAwardMovie, Movie
+from djangopoc.cinema.models import (
+    Actor,
+    Cast,
+    CinemaAward,
+    CinemaAwardMovie,
+    Movie,
+)
 
 
 class UserFactory(factory.django.DjangoModelFactory):

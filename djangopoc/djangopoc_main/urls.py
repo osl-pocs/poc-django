@@ -13,11 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+# from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
-from cinema.api import views as api_views
+from djangopoc.cinema.api import views as api_views
 
 router = routers.DefaultRouter()
 router.register('cinema', api_views.CinemaViewSet, basename='cinema')
@@ -25,7 +25,7 @@ router.register('movies', api_views.MoviesViewSet)
 router.register('actors', api_views.ActorViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('api/', include((router.urls, 'api'), namespace='api')),
-    path('cinema/', include('cinema.urls')),
+    path('cinema/', include('djangopoc.cinema.urls')),
 ]
