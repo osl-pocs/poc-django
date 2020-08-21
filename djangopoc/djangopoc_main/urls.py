@@ -18,6 +18,7 @@ from django.urls import include, path
 from rest_framework import routers
 
 from djangopoc.cinema.api import views as api_views
+from djangopoc.djangopoc_main.admin import admin_site
 
 router = routers.DefaultRouter()
 router.register('cinema', api_views.CinemaViewSet, basename='cinema')
@@ -25,7 +26,7 @@ router.register('movies', api_views.MoviesViewSet)
 router.register('actors', api_views.ActorViewSet)
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
     path('api/', include((router.urls, 'api'), namespace='api')),
     path('cinema/', include('djangopoc.cinema.urls')),
 ]
