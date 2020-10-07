@@ -1,7 +1,7 @@
 import datetime
+from random import randint
 
 import factory
-from django.contrib.auth.models import User
 from django.utils import timezone
 
 from djangopoc.cinema.models import (
@@ -11,11 +11,28 @@ from djangopoc.cinema.models import (
     CinemaAwardMovie,
     Movie,
 )
+from djangopoc.users.models import Organization, User
 
 
+# TODO: move it to its own app (users)
+class OrganizationFactory(factory.django.DjangoModelFactory):
+    name = factory.Sequence(
+        lambda n: f'organizationname-{n+1}-{randint(0, 1000)}'
+    )
+
+    location = factory.Sequence(
+        lambda n: f'organizationname-{n+1}-{randint(0, 1000)}'
+    )
+
+    class Meta:
+        model = Organization
+
+
+# TODO: move it to its own app (users)
 class UserFactory(factory.django.DjangoModelFactory):
     username = factory.Sequence(lambda n: f'username-{n+1}')
     password = 'password'
+    organization = factory.SubFactory(OrganizationFactory)
 
     class Meta:
         model = User

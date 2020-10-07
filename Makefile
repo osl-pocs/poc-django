@@ -21,8 +21,11 @@ docker-build:
 docker-pre-commit-check:
 	$(DOCKER_RUN) djangopoc pre-commit run --all-files
 
+docker-migrate:
+	$(DOCKER) exec djangopoc bash /activate.sh python manage.py migrate
+
 docker-test:
-	$(DOCKER_RUN) djangopoc python manage.py test
+	$(DOCKER) exec djangopoc bash /activate.sh python manage.py test -v 2
 
 docker-djangopoc-bash:
 	$(DOCKER) exec --privileged djangopoc bash

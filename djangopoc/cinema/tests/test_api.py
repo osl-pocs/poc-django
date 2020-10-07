@@ -90,6 +90,9 @@ class CinemaAPITestCase(APITestCase):
 
     @classmethod
     def setUpTestData(cls):
+        import pdb
+
+        pdb.set_trace()
         cls.user = UserFactory()
 
     def test_get_list(self):
