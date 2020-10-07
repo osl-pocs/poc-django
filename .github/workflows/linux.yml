@@ -28,4 +28,6 @@ jobs:
     - name: Run pre-commit check
       run: make docker-pre-commit-check
     - name: Test with pytest
-      run: make docker-test
+      run: |
+        make docker-up
+        make docker-test
