@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd party
     'rest_framework',
+    'haystack',
+    'drf_haystack',
     # local
     'djangopoc.cinema',
     'djangopoc.users',
@@ -132,4 +134,16 @@ REST_FRAMEWORK = {
         'rest_framework.pagination.PageNumberPagination'
     ),
     'PAGE_SIZE': 10,
+}
+
+# haystack
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': (
+            'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine'
+        ),
+        'URL': 'http://127.0.0.1:49200/',
+        'INDEX_NAME': 'haystack',
+    },
 }
