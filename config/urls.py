@@ -17,8 +17,8 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework import routers
 
+from config.admin import admin_site
 from djangopoc.cinema.api import views as api_views
-from djangopoc.djangopoc_main.admin import admin_site
 
 router = routers.DefaultRouter()
 router.register('cinema', api_views.CinemaViewSet, basename='cinema')

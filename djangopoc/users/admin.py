@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from djangopoc.djangopoc_main.admin import admin_site
+from config.admin import admin_site
 from djangopoc.users.forms import UserChangeForm, UserCreationForm
 from djangopoc.users.models import Organization, User
 

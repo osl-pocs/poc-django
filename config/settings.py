@@ -34,7 +34,7 @@ AUTH_USER_MODEL = 'users.User'
 
 INSTALLED_APPS = [
     # replace native admin
-    'djangopoc.djangopoc_main.apps.AdminConfig',
+    'config.apps.AdminConfig',
     # django
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     # local
     'djangopoc.cinema',
     'djangopoc.users',
-    'djangopoc.djangopoc_main',
+    'config',
 ]
 
 if DEBUG:
@@ -62,7 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'djangopoc.djangopoc_main.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -80,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'djangopoc.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database

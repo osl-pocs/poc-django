@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from config.admin import admin_site
 from djangopoc.cinema.models import (
     Actor,
     Cast,
@@ -7,7 +8,6 @@ from djangopoc.cinema.models import (
     CinemaAwardMovie,
     Movie,
 )
-from djangopoc.djangopoc_main.admin import admin_site
 
 
 class ActorAdmin(admin.ModelAdmin):
