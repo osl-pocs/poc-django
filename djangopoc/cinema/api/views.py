@@ -3,12 +3,12 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from cinema.api.serializers import (
+from djangopoc.cinema.api.serializers import (
     ActorSerializer,
     CinemaAwardSerializer,
     MovieSerializer,
 )
-from cinema.models import Actor, CinemaAward, CinemaAwardMovie, Movie
+from djangopoc.cinema.models import Actor, CinemaAward, CinemaAwardMovie, Movie
 
 
 class CinemaViewSet(viewsets.ModelViewSet):

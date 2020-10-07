@@ -27,11 +27,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'users.User'
+
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # replace native admin
+    'djangopoc.djangopoc_main.apps.AdminConfig',
+    # django
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -40,7 +44,9 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     # local
-    'cinema',
+    'djangopoc.cinema',
+    'djangopoc.users',
+    'djangopoc.djangopoc_main',
 ]
 
 if DEBUG:
@@ -56,7 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'djangopoc.urls'
+ROOT_URLCONF = 'djangopoc.djangopoc_main.urls'
 
 TEMPLATES = [
     {

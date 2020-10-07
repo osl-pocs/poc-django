@@ -1,6 +1,12 @@
 from rest_framework import serializers
 
-from cinema.models import Actor, Cast, CinemaAward, CinemaAwardMovie, Movie
+from djangopoc.cinema.models import (
+    Actor,
+    Cast,
+    CinemaAward,
+    CinemaAwardMovie,
+    Movie,
+)
 
 
 class CinemaAwardSerializer(serializers.HyperlinkedModelSerializer):
