@@ -25,7 +25,7 @@ docker-migrate:
 	$(DOCKER) exec djangopoc bash /activate.sh python manage.py migrate
 
 docker-test:
-	$(DOCKER) exec djangopoc bash /activate.sh python manage.py test -v 2
+	$(DOCKER) exec -T djangopoc bash /activate.sh python manage.py test -v 2
 
 docker-djangopoc-bash:
 	$(DOCKER) exec --privileged djangopoc bash
