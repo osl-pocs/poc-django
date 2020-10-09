@@ -1,11 +1,23 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
+from pathlib import Path
 import sys
 
+from dotenv import load_dotenv
+
+env_path = os.path.join(
+    Path(__file__).resolve().parent,
+    '.env'
+)
+load_dotenv()
+
+DJANGO_ENV_NAME = os.getenv('DJANGO_ENV_NAME')
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+    os.environ.setdefault(
+        'DJANGO_SETTINGS_MODULE', f'config.settings.{DJANGO_ENV_NAME}'
+    )
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

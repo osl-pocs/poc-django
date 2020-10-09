@@ -2,6 +2,8 @@
 
 At this moment, Django POC (*Proof of Concept*) is a project where we can test some django and django-restframework resource.
 
+Some ideas used here, like design/architecture project, were inspired/copied from [Two Scoops of Django 3.x](https://daniel.roygreenfeld.com/two-scoops-of-django-3-x.html) book!
+
 
 ## Development
 

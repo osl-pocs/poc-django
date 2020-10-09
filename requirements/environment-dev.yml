@@ -9,8 +9,10 @@ dependencies:
   - django >=2,<3
   - djangorestframework
   - django-haystack
+  - django-model-utils  # to handle common patterns like TimeStampedModel
   - factory_boy
   - python>=3.8
+  - python-dotenv
   # development
   - black
   - docker-compose
@@ -19,7 +21,9 @@ dependencies:
   - pip
   - pre-commit
   - pip:
-    - django-extensions
     - drf-haystack
     - elasticsearch>=5,<6
     - elasticsearch-dsl>=5.0.0,<6.0.0
+    # development
+    - django-debug-toolbar
+    - django-extensions
