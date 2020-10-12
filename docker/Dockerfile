@@ -1,6 +1,6 @@
 FROM continuumio/miniconda3
 
-ADD environment.yml /
+ADD requirements/environment-dev.yml /environment.yml
 
 RUN conda config --add channels conda-forge \
   && conda update --all --yes --quiet \

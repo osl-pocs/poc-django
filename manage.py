@@ -10,7 +10,7 @@ env_path = os.path.join(
     Path(__file__).resolve().parent,
     '.env'
 )
-load_dotenv()
+load_dotenv(env_path)
 
 DJANGO_ENV_NAME = os.getenv('DJANGO_ENV_NAME')
 

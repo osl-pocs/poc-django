@@ -21,18 +21,18 @@ docker-build:
 docker-pre-commit-check:
 	$(DOCKER_RUN) djangopoc pre-commit run --all-files
 
-docker-migrate:
+docker-web-migrate:
 	$(DOCKER) exec djangopoc bash /activate.sh python manage.py migrate
 
 docker-test:
 	# -T: Disable pseudo-tty allocation.
 	$(DOCKER) exec -T djangopoc bash /activate.sh python manage.py test -v 2
 
-docker-djangopoc-bash:
+docker-web-bash:
 	$(DOCKER) exec --privileged djangopoc bash
 
-docker-djangopoc-createsuperuser:
+docker-web-createsuperuser:
 	$(DOCKER) exec --privileged djangopoc bash /activate.sh python manage.py createsuperuser
 
-docker-djangopoc-haystack-update:
+docker-web-haystack-update:
 	$(DOCKER) exec --privileged djangopoc bash /activate.sh python manage.py update_index -v 2
