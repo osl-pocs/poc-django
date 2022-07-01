@@ -1,0 +1,12 @@
+name: poc-django
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python >=3.8.*
+  - psycopg2
+  # dev
+  - docker-compose
+  - pip
+  - poetry
+  - pre-commit
