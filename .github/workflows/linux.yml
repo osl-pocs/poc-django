@@ -1,7 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
-name: Python package
+name: main
 
 on:
   push:
@@ -10,24 +7,43 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  main:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.8]
+
+    concurrency:
+      group: ci-dev-${{ github.ref }}
+      cancel-in-progress: true
 
     env:
       COMPOSE_FILE: ci/docker-compose.yml
       PYTHON_VERSION: ${{ matrix.python-version }}
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build djangopoc image
-      run: make docker-build
-    - name: Run pre-commit check
-      run: make docker-pre-commit-check
-    - name: Test with pytest
-      run: |
-        make docker-up
-        make docker-test
+      - uses: actions/checkout@v2
+
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniconda-version: "latest"
+          mamba-version: "*"
+          environment-file: conda/dev.yaml
+          channels: conda-forge,nodefaults
+          activate-environment: poc-django
+          use-mamba: true
+          miniforge-variant: Mambaforge
+
+      - name: Build djangopoc image
+        run: make docker-build
+
+      - name: start services
+        run: |
+          make docker-start
+
+      - name: waiting for services
+        run: |
+          make docker-waiting
+
+      - name: Run pre-commit check
+        run: |
+          pre-commit install
+          pre-commit run --all-files

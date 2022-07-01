@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  django:
+    env_file:
+      - ../.env
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        # note: if you want to use a specific UID and GID, ensure to add it to
+        #       the .env file
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${DJANGO_PORT}/health"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 40s  # requires docker-compose 3.4
+    volumes:
+      - ..:/opt/services/poc-django
+    network_mode: host
