@@ -53,7 +53,7 @@ COPY --chown=poc:poc . /opt/services/poc-django
 
 WORKDIR /opt/services/poc-django
 
-RUN mamba env create -n $ENV_NAME --file /tmp/conda/dev.yaml \
+RUN mamba env create -n $ENV_NAME --file ./conda/dev.yaml \
   && poetry install --no-dev \
   && conda clean --all \
   && find /opt/conda/ -type f,l -name '*.a' -delete \
@@ -61,15 +61,10 @@ RUN mamba env create -n $ENV_NAME --file /tmp/conda/dev.yaml \
   && find /opt/conda/ -type f,l -name '*.js.map' -delete \
   && rm -rf /opt/conda/pkgs /tmp/*
 
-# note: keeping it to the end of the recipes helps to avoid rebuilding the
-#       image after every change.
-# COPY --chown=poc:poc . /opt/services/
+RUN sudo mkdir -p /opt/scripts/ \
+  && sudo chmod 777 /opt/scripts \
+  && ln -s ./scripts/entrypoint.sh /opt/scripts/ \
+  && echo "source /opt/scripts/entrypoint.sh" > ~/.bashrc
 
-COPY --chown=poc:poc docker/entrypoint.sh /opt/entrypoint.sh
-COPY --chown=poc:poc docker/superset/superset.sh /opt/superset.sh
-
-RUN chmod +x /opt/entrypoint.sh \
-  && echo "source /opt/entrypoint.sh" > ~/.bashrc
-
-ENTRYPOINT ["tini", "--", "/opt/entrypoint.sh"]
-CMD ["/opt/superset.sh"]
+ENTRYPOINT ["tini", "--", "/opt/scripts/entrypoint.sh"]
+CMD ["python manage.py runserver"]
