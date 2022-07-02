@@ -38,6 +38,8 @@ jobs:
 
       - name: Create environment variables file
         run: |
+          export UID=$(id -u)
+          export GID=$(id -g)
           envsubst < .env.tpl > .env-base
           grep -v "=$" .env-base > .env
           rm .env-base
