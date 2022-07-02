@@ -51,7 +51,7 @@ docker-restart: docker-stop docker-start
 	echo "[II] Docker services restarted!"
 
 .PHONY:docker-logs-follow
-docker-logs:
+docker-logs-follow:
 	$(DOCKER) logs --follow --tail 300 ${SERVICES}
 
 .PHONY:docker-logs

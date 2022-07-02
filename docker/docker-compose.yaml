@@ -11,7 +11,7 @@ services:
         # note: if you want to use a specific UID and GID, ensure to add it to
         #       the .env file
         - UID=${UID:-1000}
-        - GID=${GID:-1000}
+        - GID=${GID:-${UID:-1000}}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 20s
