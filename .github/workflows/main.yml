@@ -51,7 +51,7 @@ jobs:
 
       - name: waiting for services
         run: |
-          make docker-waiting
+          make docker-wait
 
       - name: Run pre-commit check
         run: |

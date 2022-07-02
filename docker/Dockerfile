@@ -49,22 +49,24 @@ USER poc
 ENV PATH /opt/conda/envs/$ENV_NAME/bin:$PATH
 ENV PYTHONPATH='/opt/services/poc-django:/opt/services/'
 
-COPY --chown=poc:poc . /opt/services/poc-django
+RUN mkdir -p /opt/services/poc-django
+COPY --chown=poc:poc poc_django /opt/services/poc-django/poc_django
+COPY --chown=poc:poc poetry.lock /opt/services/poc-django
+COPY --chown=poc:poc pyproject.toml /opt/services/poc-django
+COPY --chown=poc:poc conda/ /opt/services/poc-django/conda
 
 WORKDIR /opt/services/poc-django
 
 RUN mamba env create -n $ENV_NAME --file ./conda/dev.yaml \
-  && poetry install --no-dev \
+  && poetry config virtualenvs.create false \
+  && poetry install \
   && conda clean --all \
   && find /opt/conda/ -type f,l -name '*.a' -delete \
   && find /opt/conda/ -type f,l -name '*.pyc' -delete \
   && find /opt/conda/ -type f,l -name '*.js.map' -delete \
   && rm -rf /opt/conda/pkgs /tmp/*
 
-RUN sudo mkdir -p /opt/scripts/ \
-  && sudo chmod 777 /opt/scripts \
-  && ln -s ./scripts/entrypoint.sh /opt/scripts/ \
-  && echo "source /opt/scripts/entrypoint.sh" > ~/.bashrc
+RUN echo "source /opt/services/poc-django/scripts/entrypoint.sh" > ~/.bashrc
 
-ENTRYPOINT ["tini", "--", "/opt/scripts/entrypoint.sh"]
-CMD ["python manage.py runserver"]
+ENTRYPOINT ["tini", "--", "/opt/services/poc-django/scripts/entrypoint.sh"]
+CMD ["./scripts/run.sh"]
