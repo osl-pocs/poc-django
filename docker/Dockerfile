@@ -49,27 +49,24 @@ USER poc
 ENV PATH /opt/conda/envs/$ENV_NAME/bin:$PATH
 ENV PYTHONPATH='/opt/services/poc-django:/opt/services/'
 
-COPY --chown=poc:poc . /opt/services/poc-django
+RUN mkdir -p /opt/services/poc-django
+COPY --chown=poc:poc poc_django /opt/services/poc-django/poc_django
+COPY --chown=poc:poc poetry.lock /opt/services/poc-django
+COPY --chown=poc:poc pyproject.toml /opt/services/poc-django
+COPY --chown=poc:poc conda/ /opt/services/poc-django/conda
 
 WORKDIR /opt/services/poc-django
 
-RUN mamba env create -n $ENV_NAME --file /tmp/conda/dev.yaml \
-  && poetry install --no-dev \
+RUN mamba env create -n $ENV_NAME --file ./conda/dev.yaml \
+  && poetry config virtualenvs.create false \
+  && poetry install \
   && conda clean --all \
   && find /opt/conda/ -type f,l -name '*.a' -delete \
   && find /opt/conda/ -type f,l -name '*.pyc' -delete \
   && find /opt/conda/ -type f,l -name '*.js.map' -delete \
   && rm -rf /opt/conda/pkgs /tmp/*
 
-# note: keeping it to the end of the recipes helps to avoid rebuilding the
-#       image after every change.
-# COPY --chown=poc:poc . /opt/services/
+RUN echo "source /opt/services/poc-django/scripts/entrypoint.sh" > ~/.bashrc
 
-COPY --chown=poc:poc docker/entrypoint.sh /opt/entrypoint.sh
-COPY --chown=poc:poc docker/superset/superset.sh /opt/superset.sh
-
-RUN chmod +x /opt/entrypoint.sh \
-  && echo "source /opt/entrypoint.sh" > ~/.bashrc
-
-ENTRYPOINT ["tini", "--", "/opt/entrypoint.sh"]
-CMD ["/opt/superset.sh"]
+ENTRYPOINT ["tini", "--", "/opt/services/poc-django/scripts/entrypoint.sh"]
+CMD ["./scripts/run.sh"]

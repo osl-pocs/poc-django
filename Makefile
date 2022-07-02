@@ -50,14 +50,17 @@ docker-stop:
 docker-restart: docker-stop docker-start
 	echo "[II] Docker services restarted!"
 
+.PHONY:docker-logs-follow
+docker-logs-follow:
+	$(DOCKER) logs --follow --tail 300 ${SERVICES}
 
 .PHONY:docker-logs
 docker-logs:
-	$(DOCKER) logs --follow --tail 100 ${SERVICES}
+	$(DOCKER) logs --tail 500 ${SERVICES}
 
 .PHONY: docker-wait
 docker-wait:
-	echo ${SERVICES} | xargs -t -n1 ./docker/healthcheck.sh
+	echo ${SERVICES} | xargs -t -n1 timeout 180 ./docker/healthcheck.sh
 
 .PHONY:docker-dev-prepare-db
 docker-dev-prepare-db:

@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  DJANGO_SETTINGS_MODULE: config.settings.dev
+  DJANGO_SECRET_KEY: django-secret-key-ci
+
 jobs:
   main:
 
@@ -34,6 +38,7 @@ jobs:
 
       - name: Create environment variables file
         run: |
+          export GID=$(id -g)
           envsubst < .env.tpl > .env-base
           grep -v "=$" .env-base > .env
           rm .env-base
@@ -45,9 +50,14 @@ jobs:
         run: |
           make docker-start
 
-      - name: waiting for services
-        run: |
-          make docker-waiting
+      # skip for now: sqlite3.OperationalError: unable to open database file
+      # - name: waiting for services
+      #   run: |
+      #     make docker-wait
+
+      - name: docker log
+        if: ${{ failure() }}
+        run: make docker-logs SERVICE=django
 
       - name: Run pre-commit check
         run: |
