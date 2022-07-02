@@ -53,6 +53,10 @@ jobs:
         run: |
           make docker-wait
 
+      - name: docker log
+        if: ${{ failure() }}
+        run: make docker-logs SERVICE=django
+
       - name: Run pre-commit check
         run: |
           pre-commit install
