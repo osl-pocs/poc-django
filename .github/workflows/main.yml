@@ -23,6 +23,10 @@ jobs:
       COMPOSE_FILE: ci/docker-compose.yml
       PYTHON_VERSION: ${{ matrix.python-version }}
 
+    defaults:
+      run:
+        shell: bash -l {0}
+
     steps:
       - uses: actions/checkout@v2
 
@@ -64,6 +68,10 @@ jobs:
     env:
       COMPOSE_FILE: ci/docker-compose.yml
       PYTHON_VERSION: ${{ matrix.python-version }}
+
+    defaults:
+      run:
+        shell: bash -l {0}
 
     steps:
       - uses: actions/checkout@v2
