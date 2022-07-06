@@ -1,0 +1,18 @@
+[
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "password": "123456",
+        "last_login": "2022-07-04T01:01:01.001Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "Super",
+        "last_name": "Admin",
+        "email": "admin@dev.opensciencelabs.org",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2022-07-01T01:01:01.001Z",
+    }
+}
+]

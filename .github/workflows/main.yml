@@ -11,8 +11,8 @@ env:
   DJANGO_SECRET_KEY: django-secret-key-ci
 
 jobs:
-  main:
 
+  local:
     runs-on: ubuntu-latest
 
     concurrency:
@@ -22,6 +22,56 @@ jobs:
     env:
       COMPOSE_FILE: ci/docker-compose.yml
       PYTHON_VERSION: ${{ matrix.python-version }}
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniconda-version: "latest"
+          mamba-version: "*"
+          environment-file: conda/dev.yaml
+          channels: conda-forge,nodefaults
+          activate-environment: poc-django
+          use-mamba: true
+          miniforge-variant: Mambaforge
+
+      - name: Create environment variables file
+        run: |
+          export GID=$(id -g)
+          envsubst < .env.tpl > .env-base
+          grep -v "=$" .env-base > .env
+          rm .env-base
+
+      - name: install
+        run: poetry install
+
+      - name: test
+        run: pytest
+
+      - name: Run pre-commit check
+        run: |
+          pre-commit install
+          pre-commit run --all-files
+
+  docker:
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: ci-dev-${{ github.ref }}
+      cancel-in-progress: true
+
+    env:
+      COMPOSE_FILE: ci/docker-compose.yml
+      PYTHON_VERSION: ${{ matrix.python-version }}
+
+    defaults:
+      run:
+        shell: bash -l {0}
 
     steps:
       - uses: actions/checkout@v2
@@ -58,8 +108,3 @@ jobs:
       - name: docker log
         if: ${{ failure() }}
         run: make docker-logs SERVICE=django
-
-      - name: Run pre-commit check
-        run: |
-          pre-commit install
-          pre-commit run --all-files
