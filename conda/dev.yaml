@@ -10,3 +10,4 @@ dependencies:
   - pip
   - poetry
   - pre-commit
+  - python-chromedriver-binary 103.*
