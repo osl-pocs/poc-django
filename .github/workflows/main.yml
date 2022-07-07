@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: browser-actions/setup-chrome@latest
+      - uses: browser-actions/setup-chrome@stable
       - run: chrome --version
 
       - uses: conda-incubator/setup-miniconda@v2
