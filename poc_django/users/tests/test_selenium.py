@@ -8,7 +8,10 @@ from selenium import webdriver
 
 class LoginTest(LiveServerTestCase):
     def test_login(self):
-        selenium = webdriver.Chrome(chromedriver_binary.chromedriver_filename)
+        selenium = webdriver.Chrome(
+            chromedriver_binary.chromedriver_filename,
+            chrome_options=["--disable-gpu", "--headless"],
+        )
         assert selenium
         # Choose your url to visit
         # selenium.get('http://127.0.0.1:8000/')
