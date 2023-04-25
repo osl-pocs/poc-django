@@ -30,8 +30,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: install system dependency
-        run: bash scripts/install-google-chrome.sh
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - run: chrome --version
 
       - uses: conda-incubator/setup-miniconda@v2
         with:
